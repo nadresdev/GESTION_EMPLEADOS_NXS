@@ -1,0 +1,53 @@
+
+
+<persistence version="2.0"
+    xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+>
+
+<persistence-unit name="test" transaction-type="JTA">
+ <jta-data-source>java:global/DataSourceName</jta-data-source>
+     
+    <properties>
+      <property name="jakarta.jdbc.driver" value="org.h2.Driver" /> 
+      
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:bdEmpleados" /> 
+      <property name="jakarta.persistence.jdbc.user" value="nexos" /> 
+      <property name="jakarta.persistence.jdbc.passsword" value="" /> 
+       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+       <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="show_sql" value="true"/>
+      
+      <property name="hibernate.flushMode" value="FLUSH_AUTO" /> 
+    </properties>
+  </persistence-unit>
+</persistence>
+
+<!--  
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                             http://java.sun.com/xml/ns/persistence/persistence_2_1.xsd"
+         version="2.1">
+
+<persistence-unit name="persistenceUnit">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+    <class>my.application.entities.MyEntity</class>
+    
+    <properties>
+        <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" /> 
+        <property name="javax.persistence.jdbc.url" value="jdbc:h2:data/myDB.db" /> 
+        <property name="javax.persistence.jdbc.user" value="sa" /> 
+
+       
+        <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+
+        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+        <property name="hibernate.flushMode" value="FLUSH_AUTO" /> 
+    </properties>
+</persistence-unit>
+</persistence> -->
+

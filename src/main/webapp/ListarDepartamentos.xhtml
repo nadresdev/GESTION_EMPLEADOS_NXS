@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+    <h:head>
+    
+           <title>Listado de Departamentos</title>
+       
+    </h:head>
+    
+    <h:body>
+        <p:ajaxStatus style="width: 16px;height: 16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+
+        </p:ajaxStatus>
+
+        <h:form id="departamentosListForm">
+            <p:growl id="messages" showDetail="true" />
+            <p:messages/>
+
+            <p:dataTable id="departamentosDataTable" value="#{departamentosBean.departamentos}" var="departamento" editable="true" rowKey="#{departamentos.id}" 
+                         selection="#{departamentosBean.departamentoSeleccionado}" selectionMode="single" >
+
+                <f:facet name="header">
+                    Listado de Departamentos
+                </f:facet>
+                
+                <p:column headerText="Id">
+                    <h:outputText value="#{departamento.id}" />
+                </p:column>
+                
+                <p:column headerText="Codigo Departamento">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{departamento.departamento_codigo}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{departamento.departamento_codigo}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                
+
+                <p:column headerText="Nombre Departamento">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{departamento.nombreDepartamento}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{departamento.nombreDepartamento}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                 <p:column headerText="Fecha Hora creacion">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{departamento.fecha_hora_crea}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{departamento.fecha_hora_crea}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                 <p:column headerText="Fecha Hora Edición">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{departamento.fecha_hora_modifica}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{departamento.fecha_hora_modifica}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <f:facet name="footer">
+                    
+                    <p:commandButton value="Agregar" actionListener="#{departamentosBean.reiniciarDepartamentoSeleccionado}"
+                                     update=":dialogForm" oncomplete="PF('departamentosDialog').show()" />
+                                     <p:spacer height="5px"/> 
+                                      <p:commandButton value="lista empleados" action="ListarEmpleados" />
+                    <p:spacer height="5px"/> 
+                </f:facet>
+
+                <p:column headerText="Editar" style="width: 50px">
+                    <p:rowEditor/>
+                </p:column>
+
+                <p:ajax event="rowEdit" listener="#{departamentosBean.editListener}"/>
+
+            </p:dataTable>
+            
+            <p:contextMenu for="departamentosDataTable">
+                <p:menuitem value="Eliminar" update="departamentosListForm:departamentosDataTable" icon="ui-icon-close" 
+                            actionListener="#{departamentosBean.eliminarDepartamento}" />
+            </p:contextMenu>
+
+        </h:form>
+
+        <p:dialog id="departamentosDlg" widgetVar="departamentosDialog" header="Agregar Departamento" modal="true" showEffect="fade" hideEffect="fade" 
+            resizable="false" >
+            <h:form id="dialogForm">
+                <p:outputPanel id="departamentosDetail" style="text-align: center">
+                    <p:panelGrid id="display" columns="2" columnClasses="label, value" >
+                    
+                    <h:outputText value="Nombre departamento" />
+                        <h:inputText value="#{departamentosBean.departamentoSeleccionado.nombreDepartamento}" />
+                        
+                        <h:outputText value="Departamento Código" />
+                        <h:inputText value="#{departamentosBean.departamentoSeleccionado.departamento_codigo}" />
+                        
+                       
+                             
+                        
+                        <f:facet name="footer" >
+                            <p:commandButton value="Agregar" actionListener="#{departamentosBean.agregarDepartamento}" 
+                                             update="display,:departamentosListForm:departamentosDataTable" oncomplete="PF('departamentosDialog').hide();" />
+                        </f:facet>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+        
+
+    </h:body>
+</html>
